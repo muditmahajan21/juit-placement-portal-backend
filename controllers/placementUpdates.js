@@ -6,6 +6,11 @@ placementUpdatesRouter.get('/', async(request, response) => {
     response.json(placementUpdates.map((placementUpdate) => placementUpdate.toJSON()))
 })
 
+placementUpdatesRouter.get('/:id', async (request, response) => {
+    const placementUpdate = await PlacementUpdate.findById(request.params.id)
+    response.json(placementUpdate.toJSON())
+})
+
 placementUpdatesRouter.post('/', async (request, response) => {
     const body = request.body
 
@@ -20,6 +25,27 @@ placementUpdatesRouter.post('/', async (request, response) => {
     const savedPlacementUpdate = await placementUpdate.save()
 
     response.status(201).json(savedPlacementUpdate)
+})
+
+placementUpdatesRouter.put('/:id', async (request, response) => {
+    const body = request.body
+
+    const placementUpdate = {
+        title: body.title,
+        company: body.company,
+        description: body.description,
+        date: body.date,
+        package: body.package,
+    }
+
+    const updatedPlacementUpdate = await PlacementUpdate.findByIdAndUpdate(request.params.id, placementUpdate, { new: true })
+
+    response.json(updatedPlacementUpdate)
+})
+
+placementUpdatesRouter.delete('/:id', async (request, response) => {
+    await PlacementUpdate.findByIdAndRemove(request.params.id)
+    response.status(204).end()
 })
 
 module.exports = placementUpdatesRouter

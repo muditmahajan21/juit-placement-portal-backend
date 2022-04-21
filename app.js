@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const logger = require("morgan");
 
 const userRouter = require('./controllers/users')
 const placementUpdatesRouter = require('./controllers/placementUpdates')
@@ -21,12 +22,13 @@ mongoose
     })
 
 app.use(express.json())
+app.use(logger('dev'))
 
 app.use('/users', userRouter)
 app.use('/placementUpdates', placementUpdatesRouter)
 app.use('/login', loginRouter)
 
-app.use('*', (reques, response) => {
+app.use('*', (request, response) => {
     response.json({message: 'Not Valid Url'})
 })
 
