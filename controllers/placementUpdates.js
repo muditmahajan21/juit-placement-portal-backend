@@ -26,6 +26,36 @@ placementUpdatesRouter.post('/', async (request, response) => {
 
     response.status(201).json(savedPlacementUpdate)
 })
+// placementUpdatesRouter.put('/', async (request, response) => {
+//     const body = request.body
+//
+//     const placementUpdate.js = new PlacementUpdate({
+//         title: body.title,
+//         company: body.company,
+//         description: body.description,
+//         date: body.date,
+//         package: body.package,
+//     })
+//
+//     const savedPlacementUpdate = await placementUpdate.js.save()
+//
+//     response.status(201).json(savedPlacementUpdate)
+// })
+// placementUpdatesRouter.delete('/', async (request, response) => {
+//     const body = request.body
+//
+//     const placementUpdate.js = new PlacementUpdate({
+//         title: body.title,
+//         company: body.company,
+//         description: body.description,
+//         date: body.date,
+//         package: body.package,
+//     })
+//
+//     const savedPlacementUpdate = await placementUpdate.js.save()
+//
+//     response.status(201).json(savedPlacementUpdate)
+// })
 
 placementUpdatesRouter.put('/:id', async (request, response) => {
     const body = request.body
