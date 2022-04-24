@@ -38,7 +38,7 @@ updatePasswordRouter.put('/', async (request, response) => {
 
                 user.token = token
 
-                user.save((error, response) => {
+                user.save((error, result) => {
                     if(error) {
                         return response.status(400).json({
                             error: 'Reset Password failed'
