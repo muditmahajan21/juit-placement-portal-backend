@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const userRouter = require('express').Router()
 const User = require('../models/user')
+const jwt = require('jsonwebtoken')
 
 userRouter.get('/', async (request, response) => {
     const users = await User.find({})
@@ -32,18 +33,32 @@ userRouter.post('/', async (request, response) => {
 
     const passwordHash = await bcrypt.hash(password, saltRounds)
 
-    const user = new User ({
+    const user = await User.create ({
         name,
         passwordHash,
         email,
         rollno
     })
 
-    const savedUser = await user.save()
+    const userForToken = {
+        email: user.email,
+        id: user.id,
+    }
 
-    response.json(savedUser)
+    const token = jwt.sign(
+        userForToken, 
+        process.env.SECRET, 
+        {expiresIn: "2h"}
+    )
+
+    user.token = token
+
+    response.json(user)
 })
 
-module.exports = userRouter
+userRouter.delete('/:id', async(request, response) => {
+    await User.findByIdAndRemove(request.params.id)
+    response.status(204).end() 
+})
 
 module.exports = userRouter

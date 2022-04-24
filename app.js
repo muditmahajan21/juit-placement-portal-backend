@@ -7,6 +7,8 @@ const placementUpdatesRouter = require('./controllers/placementUpdates')
 const loginRouter = require('./controllers/login')
 const companyDataRouter = require('./controllers/companyData')
 
+const auth = require('./middleware/auth')
+
 const config = require('./utils/config');
 const mongoose = require('mongoose')
 
@@ -25,9 +27,12 @@ mongoose
 app.use(express.json())
 app.use(logger('dev'))
 
-app.use('/users', userRouter)
-app.use('/placementUpdates', placementUpdatesRouter)
 app.use('/login', loginRouter)
+app.use('/users', userRouter)
+
+// app.use(auth)
+
+app.use('/placementUpdates', placementUpdatesRouter)
 app.use('/companyData', companyDataRouter)
 
 app.use('*', (request, response) => {

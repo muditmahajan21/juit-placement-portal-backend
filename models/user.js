@@ -17,6 +17,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    token: {
+        type: String,
+    },
+    resetLink: {
+        type: String,
+        default: ''
+    }
 })
 
 userSchema.set('toJSON', {
