@@ -6,6 +6,9 @@ const userRouter = require('./controllers/users')
 const placementUpdatesRouter = require('./controllers/placementUpdates')
 const loginRouter = require('./controllers/login')
 const companyDataRouter = require('./controllers/companyData')
+const resetPasswordRouter = require('./controllers/resetPassword')
+const updatePasswordRouter = require('./controllers/updatePassword')
+
 
 const auth = require('./middleware/auth')
 
@@ -29,7 +32,8 @@ app.use(logger('dev'))
 
 app.use('/login', loginRouter)
 app.use('/users', userRouter)
-
+app.use('/reset-password', resetPasswordRouter)
+app.use('/update-password', updatePasswordRouter)
 // app.use(auth)
 
 app.use('/placementUpdates', placementUpdatesRouter)
