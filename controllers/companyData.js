@@ -2,8 +2,15 @@ const companyDataRouter = require('express').Router()
 const CompanyData = require('../models/companyData')
 
 companyDataRouter.get('/', async(request, response) => {
-    const companyDatas = await CompanyData.find({})
-    response.json(companyDatas.map((companyData) => companyData.toJSON()))
+    try {
+        const companyDatas = await CompanyData.find({})
+        response.json(companyDatas.map((companyData) => companyData.toJSON()))
+    } catch (error) {
+        console.log(error)
+        response.status(500).json({ 
+            error: 'Server Error' 
+        })
+    }
 })
 
 companyDataRouter.post('/', async (request, response) => {
