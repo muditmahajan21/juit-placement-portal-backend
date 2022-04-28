@@ -14,45 +14,68 @@ companyDataRouter.get('/', async(request, response) => {
 })
 
 companyDataRouter.post('/', async (request, response) => {
-    const body = request.body
-    
-    const companyData  = new CompanyData({
-        companyName: body.companyName,
-        questions: body.questions,
-        year: body.year,
-        hired: body.hired,
-        package: body.package,
-    })
+    try {
+        const body = request.body
 
-    const savedCompanyData = await companyData.save()
+        const companyData = new CompanyData({
+            companyName: body.companyName,
+            questions: body.questions,
+            year: body.year,
+            hired: body.hired,
+            package: body.package,
+        })
 
-    response.status(201).json(savedCompanyData)
+        const savedCompanyData = await companyData.save()
+
+        response.status(201).json(savedCompanyData)
+    }catch (error) {
+        response.status(500).json({
+            error: 'Server error'
+        }))
 })
 
 companyDataRouter.get('/:id', async (request, response) => {
-    const companyData = await CompanyData.findById(request.params.id)
-    response.json(companyData.toJSON())
+    try {
+        const companyData = await CompanyData.findById(request.params.id)
+        response.json(companyData.toJSON())
+    } catch (error) {
+        response.status(500).json({
+            error: 'Server error'
+        })
 })
 
 companyDataRouter.put('/:id', async (request, response) => {
-    const body = request.body
+    try {
 
-    const companyData = {
-        companyName: body.companyName,
-        questions: body.questions,
-        year: body.year,
-        hired: body.hired,
-        package: body.package,
+        const body = request.body
+
+        const companyData = {
+            companyName: body.companyName,
+            questions: body.questions,
+            year: body.year,
+            hired: body.hired,
+            package: body.package,
+        }
+
+        const updatedCompanyData = await CompanyData.findByIdAndUpdate(request.params.id, companyData, {new: true})
+
+        response.json(updatedCompanyData)
     }
-
-    const updatedCompanyData = await CompanyData.findByIdAndUpdate(request.params.id, companyData, { new: true })
-
-    response.json(updatedCompanyData)
+    catch (error) {
+        response.status(500).json({
+            error: 'Server error'
+        })
 })
 
 companyDataRouter.delete('/:id', async (request, response) => {
-    await CompanyData.findByIdAndRemove(request.params.id)
-    response.status(204).end()   
+    try {
+        await CompanyData.findByIdAndRemove(request.params.id)
+        response.status(204).end()
+    }
+    catch (error) {
+        response.status(500).json({
+            error: 'Server error'
+        })
 })
 
 module.exports = companyDataRouter  
