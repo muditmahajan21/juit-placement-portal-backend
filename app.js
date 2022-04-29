@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const logger = require("morgan");
+var cors = require('cors');
 
 const userRouter = require('./controllers/users')
 const placementUpdatesRouter = require('./controllers/placementUpdates')
@@ -22,6 +23,7 @@ mongoose
     })
 
 app.use(express.json())
+app.use(cors())
 app.use(logger('dev'))
 
 app.use('/users', userRouter)

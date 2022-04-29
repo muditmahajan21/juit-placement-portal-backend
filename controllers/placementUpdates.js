@@ -13,7 +13,7 @@ placementUpdatesRouter.get('/:id', async (request, response) => {
 
 placementUpdatesRouter.post('/', async (request, response) => {
     const body = request.body
-
+    console.log(body)
     const placementUpdate = new PlacementUpdate({
         title: body.title,
         company: body.company,
@@ -21,6 +21,8 @@ placementUpdatesRouter.post('/', async (request, response) => {
         date: body.date,
         package: body.package,
     })
+
+    console.log(placementUpdate)
 
     const savedPlacementUpdate = await placementUpdate.save()
 
