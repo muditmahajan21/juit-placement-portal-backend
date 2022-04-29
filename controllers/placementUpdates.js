@@ -5,26 +5,29 @@ placementUpdatesRouter.get('/', async(request, response) => {
     try {
         const placementUpdates = await PlacementUpdate.find({})
         response.json(placementUpdates.map((placementUpdate) => placementUpdate.toJSON()))
-    }catch ( catch (error) {
+    } catch (error) {
+        console.log(error)
         response.status(500).json({
             error: 'Server error'
-        }))
+        })
+    }
 })
 
 placementUpdatesRouter.get('/:id', async (request, response) => {
 
-        try {
-            const placementUpdate = await PlacementUpdate.findById(request.params.id)
-            response.json(placementUpdate.toJSON())
-        } catch (error) {
-            response.status(500).json({
-                error: 'Server error'
-            })
+    try {
+        const placementUpdate = await PlacementUpdate.findById(request.params.id)
+        response.json(placementUpdate.toJSON())
+    } catch (error) {
+        console.log(error)
+        response.status(500).json({
+            error: 'Server error'
+        })
+    }
 })
 
 placementUpdatesRouter.post('/', async (request, response) => {
     try {
-
         const body = request.body
 
         const placementUpdate = new PlacementUpdate({
@@ -40,14 +43,15 @@ placementUpdatesRouter.post('/', async (request, response) => {
         response.status(201).json(savedPlacementUpdate)
     }
     catch (error) {
+        console.log(error)
         response.status(500).json({
             error: 'Server error'
         })
+    }
 })
 
 placementUpdatesRouter.put('/:id', async (request, response) => {
     try {
-
         const body = request.body
 
         const placementUpdate = {
@@ -63,21 +67,24 @@ placementUpdatesRouter.put('/:id', async (request, response) => {
         response.json(updatedPlacementUpdate)
     }
     catch (error) {
+        console.log(error)
         response.status(500).json({
             error: 'Server error'
         })
+    }
 })
 
 placementUpdatesRouter.delete('/:id', async (request, response) => {
     try {
-
         await PlacementUpdate.findByIdAndRemove(request.params.id)
         response.status(204).end()
     }
     catch (error) {
+        console.log(error)
             response.status(500).json({
                 error: 'Server error'
             })
+        }
 })
 
 

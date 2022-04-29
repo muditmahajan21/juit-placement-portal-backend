@@ -29,9 +29,11 @@ companyDataRouter.post('/', async (request, response) => {
 
         response.status(201).json(savedCompanyData)
     }catch (error) {
+        console.log(error)
         response.status(500).json({
             error: 'Server error'
-        }))
+        })
+    }
 })
 
 companyDataRouter.get('/:id', async (request, response) => {
@@ -39,9 +41,11 @@ companyDataRouter.get('/:id', async (request, response) => {
         const companyData = await CompanyData.findById(request.params.id)
         response.json(companyData.toJSON())
     } catch (error) {
+        console.log(error)
         response.status(500).json({
             error: 'Server error'
         })
+    }
 })
 
 companyDataRouter.put('/:id', async (request, response) => {
@@ -62,9 +66,11 @@ companyDataRouter.put('/:id', async (request, response) => {
         response.json(updatedCompanyData)
     }
     catch (error) {
+        console.log(error)
         response.status(500).json({
             error: 'Server error'
         })
+    }
 })
 
 companyDataRouter.delete('/:id', async (request, response) => {
@@ -73,9 +79,11 @@ companyDataRouter.delete('/:id', async (request, response) => {
         response.status(204).end()
     }
     catch (error) {
+        console.log(error)
         response.status(500).json({
             error: 'Server error'
         })
+    }
 })
 
 module.exports = companyDataRouter  
