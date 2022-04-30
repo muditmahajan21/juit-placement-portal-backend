@@ -17,6 +17,12 @@ loginRouter.post('/', async (request, response) => {
                 error: 'invalid username or password'
             })
         }
+        
+        if(!currUser.verified) {
+            return response.status(401).json({
+                error: 'User not verified'
+            })
+        }
 
         const userForToken = {
             email: currUser.email,
