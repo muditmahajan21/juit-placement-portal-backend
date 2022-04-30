@@ -2,7 +2,7 @@ const updatePasswordRouter = require('express').Router()
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-
+ 
 updatePasswordRouter.put('/', async (request, response) => {
     try {
         const {token, password} = request.body

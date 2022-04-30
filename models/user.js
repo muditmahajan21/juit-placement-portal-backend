@@ -19,10 +19,15 @@ const userSchema = new mongoose.Schema({
     },
     token: {
         type: String,
+        default: '',
     },
     resetLink: {
         type: String,
         default: ''
+    },
+    verified: {
+        type: Boolean,
+        default: false
     }
 })
 

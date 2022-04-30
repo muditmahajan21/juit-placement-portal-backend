@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt')
 const userRouter = require('express').Router()
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
+const nodemailer = require('nodemailer')
 
 userRouter.get('/', async (request, response) => {
     try {
@@ -52,7 +53,8 @@ userRouter.post('/', async (request, response) => {
             name,
             passwordHash,
             email,
-            rollno
+            rollno,
+            token: ''
         })
 
         const userForToken = {
@@ -67,6 +69,40 @@ userRouter.post('/', async (request, response) => {
         )
 
         user.token = token
+        
+        user.save()
+
+        let transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+                user: process.env.GOOGLE_EMAIL,
+                pass: process.env.GOOGLE_PASSWORD
+            }
+        })
+
+        const data = ({
+            from: 'juit.placement.portal@gmail.com',
+            to: email,
+            subject: 'Email Verification for JUIT Placement Portal',
+            html: `
+            <h3>PLease click the link below to verify your email <\h3>
+            <a href="http://localhost:3001/verify-email?id=${token}">Verify Email</a>
+            `
+        })
+
+        let info = transporter.sendMail(data, (error, body) => {
+            if (error) {
+                return response.status(400).json({
+                    error: error.message
+                })
+            }
+            
+            return response.status(200).json({
+                message: 'Verification link sent successfully'
+            })
+        })
 
         response.json(user) 
     } catch (error) {

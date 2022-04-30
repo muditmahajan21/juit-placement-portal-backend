@@ -8,7 +8,7 @@ const loginRouter = require('./controllers/login')
 const companyDataRouter = require('./controllers/companyData')
 const resetPasswordRouter = require('./controllers/resetPassword')
 const updatePasswordRouter = require('./controllers/updatePassword')
-
+const verifyEmailRouter = require('./controllers/verifyEmail')
 
 const auth = require('./middleware/auth')
 
@@ -38,6 +38,7 @@ app.use('/update-password', updatePasswordRouter)
 
 app.use('/placementUpdates', placementUpdatesRouter)
 app.use('/companyData', companyDataRouter)
+app.use('/verify-email', verifyEmailRouter)
 
 app.use('*', (request, response) => {
     response.json({message: 'Not Valid Url'})
