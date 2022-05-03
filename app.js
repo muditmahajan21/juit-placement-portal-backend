@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const logger = require("morgan");
-var cors = require('cors');
+const cors = require('cors');
 
 const userRouter = require('./controllers/users')
 const placementUpdatesRouter = require('./controllers/placementUpdates')

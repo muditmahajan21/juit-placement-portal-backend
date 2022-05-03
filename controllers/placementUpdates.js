@@ -27,21 +27,6 @@ placementUpdatesRouter.get('/:id', async (request, response) => {
 })
 
 placementUpdatesRouter.post('/', async (request, response) => {
-<<<<<<< HEAD
-    const body = request.body
-    console.log(body)
-    const placementUpdate = new PlacementUpdate({
-        title: body.title,
-        company: body.company,
-        description: body.description,
-        date: body.date,
-        package: body.package,
-    })
-
-    console.log(placementUpdate)
-
-    const savedPlacementUpdate = await placementUpdate.save()
-=======
     try {
         const body = request.body
 
@@ -54,7 +39,6 @@ placementUpdatesRouter.post('/', async (request, response) => {
         })
 
         const savedPlacementUpdate = await placementUpdate.save()
->>>>>>> 0ad1ed405b662bc75c8882248d335cf92cfef595
 
         response.status(201).json(savedPlacementUpdate)
     }
