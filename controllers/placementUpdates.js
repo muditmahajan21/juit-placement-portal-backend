@@ -1,5 +1,6 @@
 const placementUpdatesRouter = require('express').Router()
 const PlacementUpdate = require('../models/placementUpdate')
+const companyData = require('../models/companyData')
 
 placementUpdatesRouter.get('/', async(request, response) => {
     try {
@@ -39,6 +40,29 @@ placementUpdatesRouter.post('/', async (request, response) => {
         })
 
         const savedPlacementUpdate = await placementUpdate.save()
+
+        const presentCompanyData = await companyData.findOne({ companyName: body.company })
+
+        if(presentCompanyData) {
+            const jobData = {
+                jobTitle: body.title,
+                package: body.package,
+                jobDescription: body.description,
+            }
+            presentCompanyData.jobs.push(jobData)
+            await presentCompanyData.save()
+        } else {
+        
+            const newCompanyData = new companyData({
+                companyName: body.company,
+                jobs: {
+                    jobTitle: body.title,
+                    package: body.package,
+                    jobDescription: body.description
+                }
+            })
+            const savedCompanyData = await newCompanyData.save()
+        }
 
         response.status(201).json(savedPlacementUpdate)
     }
