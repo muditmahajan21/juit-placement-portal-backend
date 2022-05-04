@@ -36,9 +36,21 @@ companyDataRouter.post('/', async (request, response) => {
     }
 })
 
-companyDataRouter.get('/:id', async (request, response) => {
+// companyDataRouter.get('/:id', async (request, response) => {
+//     try {
+//         const companyData = await CompanyData.findById(request.params.id)
+//         response.json(companyData.toJSON())
+//     } catch (error) {
+//         console.log(error)
+//         response.status(500).json({
+//             error: 'Server error'
+//         })
+//     }
+// })
+
+companyDataRouter.get('/:companyName', async (reques, response) => {
     try {
-        const companyData = await CompanyData.findById(request.params.id)
+        const companyData = await CompanyData.findOne({ companyName: reques.params.companyName })
         response.json(companyData.toJSON())
     } catch (error) {
         console.log(error)
