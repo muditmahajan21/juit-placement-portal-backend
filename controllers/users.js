@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const userRouter = require('express').Router()
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
-const nodemailer = require('nodemailer')
+const nodemailer = require('nodemailer') 
 
 userRouter.get('/', async (request, response) => {
     try {
